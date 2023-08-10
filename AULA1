@@ -1,0 +1,21 @@
+CREATE DATABASE "LBD"
+TEMPLATE = TEMPLATE0
+ENCODING "WIN1252"
+CONNECTION LIMIT -1;
+
+CREATE TABLE tb_cliente(
+id_cliente INTEGER,
+titulo CHAR(4),
+NOME VARCHAR(32) CONSTRAINT nn_cliente_nome NOT NULL,
+sobrenome VARCHAR(32) CONSTRAINT nn_cliente_sobrenome NOT NULL,
+endereco VARCHAR(52) CONSTRAINT nn_cliente_endereco NOT NULL,
+numero VARCHAR(5) CONSTRAINT nn_cliente_numero NOT NULL,
+complemento VARCHAR(52),
+cep VARCHAR(10),
+cidade VARCHAR(52) CONSTRAINT nn_cliente_cidade NOT NULL,
+estado CHAR(2) CONSTRAINT nn_cliente_estado NOT NULL,
+fone_fixo VARCHAR(15) CONSTRAINT nn_cliente_fone_fixo NOT NULL,
+fone_movel VARCHAR(15) CONSTRAINT nn_cliente_fone_movel NOT NULL,
+fg_ativo INTEGER,
+CONSTRAINT pk_cliente_id_cliente PRIMARY KEY(id_cliente)
+);
