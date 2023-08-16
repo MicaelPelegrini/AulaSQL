@@ -19,3 +19,44 @@ fone_movel VARCHAR(15) CONSTRAINT nn_cliente_fone_movel NOT NULL,
 fg_ativo INTEGER,
 CONSTRAINT pk_cliente_id_cliente PRIMARY KEY(id_cliente)
 );
+
+CREATE TABLE tb_item (
+	id_item integer,
+	ds_item	varchar(64) constraint nn_item_ds_item not null,
+	preco_custo	numeric(7,2),
+	preco_venda	numeric(7,2),
+	fg_ativo	integer,
+	CONSTRAINT pk_item_id_item PRIMARY KEY(id_item)
+);
+
+create table tb_pedido(
+id_pedido  integer,
+id_cliente  integer constraint nn_pedido_id_cliente not null,
+dt_compra  timestamp,
+dt_entrega  timestamp,
+valor  numeric(7,2),
+fg_ativo  integer,
+constraint pk_pedido_id_pedido primary key(id_pedido),
+constraint fk_pedido_id_cliente foreign key(id_cliente)
+  references tb_cliente(id_cliente)
+);
+
+create table tb_pedido(
+id_pedido  integer,
+id_cliente  integer constraint nn_pedido_id_cliente not null,
+dt_compra  timestamp,
+dt_entrega  timestamp,
+valor  numeric(7,2),
+fg_ativo  integer,
+constraint pk_pedido_id_pedido primary key(id_pedido),
+constraint fk_pedido_id_cliente foreign key(id_cliente)
+  references tb_cliente(id_cliente)
+);
+
+create table tb_codigo_barras(
+	codigo_barras integer
+		constraint nn_cod_barras_codigo_barras not null,
+	id_item	integer constraint nn_cod_barras_id_item not null,
+		constraint fk_cod_barras_id_item foreign key(id_item)
+			references tb_item(id_item)
+);
