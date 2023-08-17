@@ -96,3 +96,11 @@ insert into tb_cliente values
 (13,'Sra','Laura','Batista','Rua Villa Lobos','76',null,'13976 018','Ribeirão Preto','SP','2111 8710','9991 2324',1),
 (14,'Sr','Valmil','Feliciano','Rua Professor Emilton Amaral','961','Loteamento Novo Horizonte','58053 223','João Pessoa','PB','4431 8740','9766 0033',1),
 (15,'Sr','Agnaldo','Aparecido','Rua Soldado Celio Tonelli','778',null,'09240 320','Santo André','SP','2386 8092','99625 3683',1);
+
+insert into tb_item(id_item,ds_item,preco_custo,preco_venda,fg_ativo) VALUES
+(1,'Quebra-cabeça de Madeira',15.23,21.95,1),
+(2,'Cubo X', 7.45,11.49,1),
+(3,'CD Linux',1.99,2.49,1),
+(4,'Tecidos',2.11,3.99,1),
+(5,'Moldura',7.54,9.95,1),
+(6,'Ventilador Pequeno',9.23,15.75,1);
