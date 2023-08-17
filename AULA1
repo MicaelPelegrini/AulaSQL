@@ -83,3 +83,10 @@ insert into tb_cliente VALUES
 (5,'Sr','Vitor','Silva','Estrada Aguá Chata', 's/n','Rodovia 356','07251 000','Guarulhos','SP','4343 6712','831 3411',1),
 (6,'Sr','Claudinei','Safra','Avenida José Osvaldo Marques','1562',null,'14173 010','Sertãozinho','SP','3698 8100','8131 6409',1),
 (7,'Sr','Ricardo','Ferreira','Alameda Assunta Barizani Tienghi','88',null,'18046 705', 'Sorocaba','SP','6534 7099','9988 1251',1);
+
+insert into tb_cliente
+values
+(8,'Sra','Anna','Kelly','Rua das Acacias','1089',null,'13187 042','Hortolândia','SP','6432 440043','9465 0023',1),
+(9,'Sra','Cristiane','Hickman','Rua Agenir Martinhon Scachetti','300',null,'13341 633','Indaiatuba','SP','3512 1243','9987 0001',1),
+(10,'Sr','Marcos','Augusto','Avenida Australia','s/n',null,'06852 100','Itapecerica da Serra','SP','3623 8821','8891 2333',1),
+(11, 'Sr','David','Silva','Rua Arcy Prestes Ruggeri','24','Esquina do Mercado','18201 720','Itapetininga','SP','4565 9240','7765 4029',1);
