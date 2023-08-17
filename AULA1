@@ -90,3 +90,9 @@ values
 (9,'Sra','Cristiane','Hickman','Rua Agenir Martinhon Scachetti','300',null,'13341 633','Indaiatuba','SP','3512 1243','9987 0001',1),
 (10,'Sr','Marcos','Augusto','Avenida Australia','s/n',null,'06852 100','Itapecerica da Serra','SP','3623 8821','8891 2333',1),
 (11, 'Sr','David','Silva','Rua Arcy Prestes Ruggeri','24','Esquina do Mercado','18201 720','Itapetininga','SP','4565 9240','7765 4029',1);
+
+insert into tb_cliente values
+(12,'Sr','Ricardo','Cunha','Rua Jose Fortunato de Godoy','889', null,'13976 121','Itapira','SP','5467 1959','9244 9584',1),
+(13,'Sra','Laura','Batista','Rua Villa Lobos','76',null,'13976 018','Ribeirão Preto','SP','2111 8710','9991 2324',1),
+(14,'Sr','Valmil','Feliciano','Rua Professor Emilton Amaral','961','Loteamento Novo Horizonte','58053 223','João Pessoa','PB','4431 8740','9766 0033',1),
+(15,'Sr','Agnaldo','Aparecido','Rua Soldado Celio Tonelli','778',null,'09240 320','Santo André','SP','2386 8092','99625 3683',1);
