@@ -77,3 +77,9 @@ VALUES
 '30150 040','Belo Horizonte','MG','3676 1209','8876 4543',1),
 (3,'Sr','Alex','Matheus','Rua Eva Terpins','s/n', null,
 '05327 030', 'São Paulo','SP','6576 0099','9358 7676',1);
+
+insert into tb_cliente VALUES
+(4,'Sr','Andre','Lopes','Rua Fortaleza','552', null,'11436 360','Guarujá','SP','5654 4343', '9821 4321', 1),
+(5,'Sr','Vitor','Silva','Estrada Aguá Chata', 's/n','Rodovia 356','07251 000','Guarulhos','SP','4343 6712','831 3411',1),
+(6,'Sr','Claudinei','Safra','Avenida José Osvaldo Marques','1562',null,'14173 010','Sertãozinho','SP','3698 8100','8131 6409',1),
+(7,'Sr','Ricardo','Ferreira','Alameda Assunta Barizani Tienghi','88',null,'18046 705', 'Sorocaba','SP','6534 7099','9988 1251',1);
