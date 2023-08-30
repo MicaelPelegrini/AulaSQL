@@ -1,0 +1,52 @@
+--seleciona nomes onde o id esta entre 5 e 9
+select id_cliente, nome from tb_cliente tc where id_cliente between 5 and 9;
+
+--seleciona os nomes entre a letra a e d
+select id_cliente, nome from tb_cliente tc where nome between 'A' and 'D' order by nome;
+
+--combina os nomes começados em R com like e o operador %
+select id_cliente, nome from tb_cliente where nome like 'R%';
+
+--combina os nomes terminados em e com like e operador %
+select id_cliente, nome from tb_cliente where nome like '%e';
+
+--combina os nomes com somente 4 caracteres cada _ corresponde a uma letra
+select id_cliente, nome from tb_cliente where nome like '____';
+
+--recupera dados de clientes onde a segunda letra do nome é igual a a, sensitive case
+select id_cliente, nome from tb_cliente where nome like '_a%';
+
+--o ilike é utilizado para indicar que a busca é insensitive case
+select id_cliente, nome from tb_cliente where nome ilike 'a%';
+
+--limit é utilizado para limitar o numero de tuplas que ira aparecer no select 
+select id_cliente, nome from tb_cliente limit 5;
+
+--offset é utilizado junto ao limit para pular registros e apresentar a quantidade limitada
+select id_cliente, nome from tb_cliente limit 8 offset 2;
+
+--somente usanto offset ele ira pular as primeiras tuplas conforme o numero passado
+select id_cliente , nome from tb_cliente offset 12;
+
+create table tb_teste(
+coluna_a integer
+);
+ 
+insert into tb_teste values (0), (1), (NULL);
+
+--valor null é totalmente ignorado
+select * from TB_TESTE where coluna_a != 0;
+
+select * from tb_teste where coluna_a is null;
+
+select * from tb_teste where coluna_a is not null;
+
+select cast ('2023/05/01' as date);
+
+show datestyle;
+
+select cast ('2023/05/01' as timestamp);
+
+select * from tb_pedido where date_part('month', dt_compra)= 9;
+
+select * from tb_pedido where dt_compra >= cast('2013 07 21' as date);
