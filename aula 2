@@ -53,4 +53,12 @@ select * from tb_pedido where dt_compra >= cast('2013 07 21' as date);
 
 select now(), current_timestamp ;
 
-select dt_entrega - dt_compras as intervalo from tb_pedido;
+select dt_entrega - dt_compra as intervalo from tb_pedido;
+
+select * from tb_pedido;
+
+select id_cliente from tb_cliente where nome = 'Anna' and sobrenome = 'Kelly';
+
+select * from tb_pedido where id_cliente = 8;
+
+select tb_cliente.nome, tb_pedido.dt_compra from tb_cliente, tb_pedido where tb_cliente.id_cliente = tb_pedido.id_cliente and tb_cliente.id_cliente = 8;
