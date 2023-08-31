@@ -1,0 +1,27 @@
+create database "db_ex_01"
+template = template0
+encoding "win1252"
+connection limit -1;
+
+create table tb_funcionario(
+id_funcionrio  integer,
+id_funcao  integer,
+id_escolaridade integer,
+nome varchar(60),
+cpf varchar(11),
+rg varchar(10),
+fg_ativo integer,
+
+constraint pk_tb_funcionario_id_funcionario primary key(id_funcionario),
+constraint fk_tb_funcionario_id_funcao foreign key(id_funcao),
+	references tb_funcao(id_funcao),
+constraint fk_tb_funcionario_id_escolaridade foreign key(id_escolaridade)
+	references tb_escolaridade(id_escolaridade)
+);
+
+create table tb_funcao(
+id_escolaridade integer,
+descricao varchar(60),
+fg_ativo integer,
+constraint pk_tb_funcao_id_funcao primary key(id_funcao)
+);
