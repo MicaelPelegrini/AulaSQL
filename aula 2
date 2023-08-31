@@ -62,3 +62,31 @@ select id_cliente from tb_cliente where nome = 'Anna' and sobrenome = 'Kelly';
 select * from tb_pedido where id_cliente = 8;
 
 select tb_cliente.nome, tb_pedido.dt_compra from tb_cliente, tb_pedido where tb_cliente.id_cliente = tb_pedido.id_cliente and tb_cliente.id_cliente = 8;
+
+select tb_cliente.nome , tb_pedido.dt_compra from tb_cliente ,tb_pedido where tb_cliente.id_cliente = tb_pedido.id_cliente and tb_cliente.nome = 'Agnaldo' and tb_cliente.sobrenome = 'Aparecido';
+
+select ds_item, preco_custo, codigo_barras from tb_item, tb_codigo_barras where tb_codigo_barras.id_item = tb_item.id_item order by 2;
+
+select c.nome, p.dt_compra from tb_cliente c, tb_pedido p where c.id_cliente = p.id_cliente and c.nome = 'Anna' and c.sobrenome = 'Kelly';
+
+select c.nome, p.dt_compra from tb_cliente c inner join tb_pedido p on (c.id_cliente = p.id_cliente) where c.nome = 'Anna' and c.sobrenome = 'Kelly';
+
+select c.nome, p.dt_compra, ip.id_item,ip.quantidade from tb_cliente c, tb_pedido p, tb_item_pedido ip where c.id_cliente = p.id_cliente and p.id_pedido = ip.id_pedido and c.nome = 'Anna' and c.sobrenome = 'Kelly';
+
+select c.nome, p.dt_compra, ip.id_item, ip.quantidade from tb_cliente c inner join tb_pedido p on (c.id_cliente = p.id_cliente) inner join tb_item_pedido ip on (p.id_pedido = ip.id_pedido) where c.nome = 'Anna' and c.sobrenome = 'Kelly';
+
+select c.nome, p.dt_compra, ip.id_item, i.ds_item, ip.quantidade 
+from tb_cliente c, tb_pedido p, tb_item_pedido ip, tb_item i 
+where c.id_cliente = p.id_cliente 
+and p.id_pedido = ip.id_pedido 
+and ip.id_item = i.id_item 
+and c.nome = 'Anna' 
+and c.sobrenome = 'Kelly';
+
+select c.nome, p.dt_compra, ip.id_item, i.ds_item, ip.quantidade
+from tb_cliente c
+inner join tb_pedido p on (c.id_cliente = p.id_cliente)
+inner join tb_item_pedido ip on (p.id_pedido = ip.id_pedido)
+inner join tb_item i on (ip.id_item = i.id_item)
+where c.nome = 'Anna' and c.sobrenome = 'Kelly';
+
