@@ -46,8 +46,38 @@ insert into tb_funcionario values
 (2,2,2,'Camila Ap. Fernand', '7651234', '87658-0', 1),
 (3,1,3, 'Patricia Rossini', '98765432111', '987623-7',1);
 
+-- ex 4
 select func.nome, func.cpf, esc.descricao, f.salario from tb_funcionario func
 inner join tb_escolaridade esc on esc.id_escolaridade = func.id_escolaridade
 inner join tb_funcao f on f.id_funcao = func.id_funcao
 where f.salario > 3000 and f.salario < 4600 and 
 func.fg_ativo = 1 and esc.fg_ativo = 1 and f.fg_ativo = 1;
+
+-- ex 5
+select func.id_funcionario, f.descricao, esc.descricao, func.nome, func.cpf, func.rg from tb_funcionario func
+inner join tb_escolaridade esc on esc.id_escolaridade = func.id_escolaridade
+inner join tb_funcao f on f.id_funcao = func.id_funcao
+where f.descricao like '___e%' and func.fg_ativo = 1 and f.fg_ativo = 1 and esc.fg_ativo = 1
+order by func.nome desc;
+
+-- ex 6
+select func.id_funcionario, func.nome, f.descricao, f.salario, f.salario*12 as salario_anual from tb_funcionario func
+inner join tb_escolaridade esc on esc.id_escolaridade = func.id_escolaridade
+inner join tb_funcao f on f.id_funcao = func.id_funcao
+where func.fg_ativo = 1 and esc.fg_ativo = 1 and f.fg_ativo = 1
+order by f.salario desc;
+
+-- ex 7
+select func.nome, func.cpf, func.rg, f.descricao, esc.descricao from tb_funcionario func
+inner join tb_escolaridade esc on esc.id_escolaridade = func.id_escolaridade
+inner join tb_funcao f on f.id_funcao = func.id_funcao
+where f.salario > 4500 or f.descricao = 'Desenvolvedor C#' 
+and func.fg_ativo = 1 and esc.fg_ativo = 1 and f.fg_ativo = 1
+order by esc.descricao;
+
+-- ex 8
+select func.nome, f.descricao, esc.descricao from tb_funcionario func
+inner join tb_escolaridade esc on esc.id_escolaridade = func.id_escolaridade
+inner join tb_funcao f on f.id_funcao = func.id_funcao
+where func.fg_ativo = 1 and f.fg_ativo = 1 and esc.fg_ativo = 1
+offset 2;
