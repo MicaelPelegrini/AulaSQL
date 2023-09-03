@@ -16,8 +16,8 @@ constraint fk_tb_funcionario_id_escolaridade foreign key(id_escolaridade)
 
 create table tb_funcao(
 id_funcao integer,
-id_escolaridade integer,
 descricao varchar(60),
+salario numeric(7,2),
 fg_ativo integer,
 
 constraint pk_tb_funcao_id_funcao primary key(id_funcao)
@@ -30,3 +30,24 @@ fg_ativo integer,
 
 constraint pk_tb_escolaridade_id_escolaridade primary key(id_escolaridade)
 );
+
+insert into tb_escolaridade values 
+(1, 'Ensino Fundamental',1),
+(2, 'Ensino Medio',1),
+(3, 'Nivel Superior',1);
+
+insert into tb_funcao values 
+(1, 'Desenvolvedor Java', 4565.85, 1),
+(2, 'Desenvolvedor C#', 3400.00, 1),
+(3, 'DBA', 8500.00, 1);
+
+insert into tb_funcionario values 
+(1,3,3,'Agnaldo Peterson', '12344321', '98777-X', 1),
+(2,2,2,'Camila Ap. Fernand', '7651234', '87658-0', 1),
+(3,1,3, 'Patricia Rossini', '98765432111', '987623-7',1);
+
+select func.nome, func.cpf, esc.descricao, f.salario from tb_funcionario func
+inner join tb_escolaridade esc on esc.id_escolaridade = func.id_escolaridade
+inner join tb_funcao f on f.id_funcao = func.id_funcao
+where f.salario > 3000 and f.salario < 4600 and 
+func.fg_ativo = 1 and esc.fg_ativo = 1 and f.fg_ativo = 1;
