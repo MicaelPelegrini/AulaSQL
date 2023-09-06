@@ -1,0 +1,50 @@
+select * from tb_cliente;
+
+insert into tb_cliente 
+values
+(16,'Sr','Sidney','Magal','Rua Teste', '71',null, '13400 500','Cravinhos','SP','4939 2386','8092 6832',1);
+
+insert into tb_cliente 
+values
+(17,'Sra','Joana','D''Arc','Rua Aurora','10',null,'40013 890','Ourinhos','SP','4939 2386', '8092 6832',1);
+
+insert into tb_cliente (id_cliente, titulo, nome, sobrenome, endereco, numero, cep, cidade , estado, fone_fixo, fone_movel, fg_ativo)
+values
+(18,'Sra','Sarah', 'Martins', 'Rua Piracicaba','s/n', '40013 890', 'Mococa','SP', '3922 7622', '9876 2132',1);
+
+insert into tb_cliente (id_cliente, titulo, sobrenome, nome, endereco, numero, cep, cidade , estado, fone_fixo, fone_movel, fg_ativo)
+values
+(19,'Sra', 'Nome_19', 'Sobrenome_19','Endereco 19','19', '19191 191', 'Cidade 19', 'SP', '1919 1919', '91919 1919', 1),
+(20, 'Sra', 'Nome_20', 'Sobrenome_20', 'Endereco 20', '20', '20202 202', 'Cidade 20', 'SP', '2020 2020', '20202 2020',1);
+
+create sequence sq_teste
+minvalue 1
+increment 1
+start 1
+no cycle; --default
+
+update tb_cliente 
+set nome = 'Sobrenome_20', 
+	sobrenome = 'Nome_20'
+where id_cliente = 20;
+
+
+create table tb_pratica_sequencia(
+coluna_a integer default nextval('sq_teste'),
+coluna_b varchar,
+coluna_c varchar,
+primary key(coluna_a)
+);
+
+
+insert into tb_pratica_sequencia (coluna_a, coluna_b, coluna_c)
+values
+(1, 'Exemplo A', 'Exemplo A'),
+(2, 'Exemplo B', 'Exemplo B'),
+(3, 'Exemplo C', 'Exemplo C');
+
+insert into tb_pratica_sequencia (coluna_b, coluna_c)
+values
+('Exemplo D', 'Exemplo D'),
+('Exemplo E', 'Exemplo E'),
+('Exemplo F', 'Exemplo F');
