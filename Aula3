@@ -43,8 +43,34 @@ values
 (2, 'Exemplo B', 'Exemplo B'),
 (3, 'Exemplo C', 'Exemplo C');
 
+
 insert into tb_pratica_sequencia (coluna_b, coluna_c)
 values
 ('Exemplo D', 'Exemplo D'),
 ('Exemplo E', 'Exemplo E'),
 ('Exemplo F', 'Exemplo F');
+
+select currval('sq_teste');
+
+select * from tb_pratica_sequencia;
+
+select nextval('sq_teste');
+
+select setval('sq_teste', 100);
+
+select * from sq_teste;
+
+insert into tb_pratica_sequencia (coluna_a, coluna_b, coluna_c)
+values
+(default, 'Exemplo D', 'Exemplo D');
+
+delete from tb_pratica_sequencia where coluna_a = 3;
+
+
+insert into tb_cliente (id_cliente, titulo, nome, sobrenome, endereco, numero, cep, complemento, cidade, estado, fone_fixo, fone_movel, fg_ativo)
+values
+(21, 'Sr', 'Teste NULL', 'Silva', 'Rua Teste NULL', 's/n', '40013 890', null, 'Cajuru', 'SP', '3922 7622', '9876 2132', 1);
+
+insert into tb_cliente (id_cliente, titulo, nome, sobrenome, endereco, numero, cep, cidade, estado, fone_fixo, fone_movel, fg_ativo)
+values
+(22, 'Sr', 'Teste NULL', 'Silva', 'Rua Teste NULL', 's/n', '40013 890', 'Lins', 'SP', '3344 8899', '99163 3221', 1);
