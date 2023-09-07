@@ -1,148 +1,170 @@
-select * from tb_cliente;
+CREATE DATABASE "LBD"
+TEMPLATE = TEMPLATE0
+ENCODING "WIN1252"
+CONNECTION LIMIT -1;
 
-insert into tb_cliente 
-values
-(16,'Sr','Sidney','Magal','Rua Teste', '71',null, '13400 500','Cravinhos','SP','4939 2386','8092 6832',1);
-
-insert into tb_cliente 
-values
-(17,'Sra','Joana','D''Arc','Rua Aurora','10',null,'40013 890','Ourinhos','SP','4939 2386', '8092 6832',1);
-
-insert into tb_cliente (id_cliente, titulo, nome, sobrenome, endereco, numero, cep, cidade , estado, fone_fixo, fone_movel, fg_ativo)
-values
-(18,'Sra','Sarah', 'Martins', 'Rua Piracicaba','s/n', '40013 890', 'Mococa','SP', '3922 7622', '9876 2132',1);
-
-insert into tb_cliente (id_cliente, titulo, sobrenome, nome, endereco, numero, cep, cidade , estado, fone_fixo, fone_movel, fg_ativo)
-values
-(19,'Sra', 'Nome_19', 'Sobrenome_19','Endereco 19','19', '19191 191', 'Cidade 19', 'SP', '1919 1919', '91919 1919', 1),
-(20, 'Sra', 'Nome_20', 'Sobrenome_20', 'Endereco 20', '20', '20202 202', 'Cidade 20', 'SP', '2020 2020', '20202 2020',1);
-
-create sequence sq_teste
-minvalue 1
-increment 1
-start 1
-no cycle; --default
-
-update tb_cliente 
-set nome = 'Sobrenome_20', 
-	sobrenome = 'Nome_20'
-where id_cliente = 20;
-
-
-create table tb_pratica_sequencia(
-coluna_a integer default nextval('sq_teste'),
-coluna_b varchar,
-coluna_c varchar,
-primary key(coluna_a)
+CREATE TABLE tb_cliente(
+id_cliente INTEGER,
+titulo CHAR(4),
+NOME VARCHAR(32) CONSTRAINT nn_cliente_nome NOT NULL,
+sobrenome VARCHAR(32) CONSTRAINT nn_cliente_sobrenome NOT NULL,
+endereco VARCHAR(52) CONSTRAINT nn_cliente_endereco NOT NULL,
+numero VARCHAR(5) CONSTRAINT nn_cliente_numero NOT NULL,
+complemento VARCHAR(52),
+cep VARCHAR(10),
+cidade VARCHAR(52) CONSTRAINT nn_cliente_cidade NOT NULL,
+estado CHAR(2) CONSTRAINT nn_cliente_estado NOT NULL,
+fone_fixo VARCHAR(15) CONSTRAINT nn_cliente_fone_fixo NOT NULL,
+fone_movel VARCHAR(15) CONSTRAINT nn_cliente_fone_movel NOT NULL,
+fg_ativo INTEGER,
+CONSTRAINT pk_cliente_id_cliente PRIMARY KEY(id_cliente)
 );
 
-
-insert into tb_pratica_sequencia (coluna_a, coluna_b, coluna_c)
-values
-(1, 'Exemplo A', 'Exemplo A'),
-(2, 'Exemplo B', 'Exemplo B'),
-(3, 'Exemplo C', 'Exemplo C');
-
-
-insert into tb_pratica_sequencia (coluna_b, coluna_c)
-values
-('Exemplo D', 'Exemplo D'),
-('Exemplo E', 'Exemplo E'),
-('Exemplo F', 'Exemplo F');
-
-select currval('sq_teste');
-
-select * from tb_pratica_sequencia;
-
-select nextval('sq_teste');
-
-select setval('sq_teste', 100);
-
-select * from sq_teste;
-
-insert into tb_pratica_sequencia (coluna_a, coluna_b, coluna_c)
-values
-(default, 'Exemplo D', 'Exemplo D');
-
-delete from tb_pratica_sequencia where coluna_a = 3;
-
-
-insert into tb_cliente (id_cliente, titulo, nome, sobrenome, endereco, numero, cep, complemento, cidade, estado, fone_fixo, fone_movel, fg_ativo)
-values
-(21, 'Sr', 'Teste NULL', 'Silva', 'Rua Teste NULL', 's/n', '40013 890', null, 'Cajuru', 'SP', '3922 7622', '9876 2132', 1);
-
-insert into tb_cliente (id_cliente, titulo, nome, sobrenome, endereco, numero, cep, cidade, estado, fone_fixo, fone_movel, fg_ativo)
-values
-(22, 'Sr', 'Teste NULL', 'Silva', 'Rua Teste NULL', 's/n', '40013 890', 'Lins', 'SP', '3344 8899', '99163 3221', 1);
-
-
-create table tb_valor_nulo(
-id serial,
-ds_a varchar constraint nn_ds_a not null,
-ds_b varchar null,
-primary key(id)
+CREATE TABLE tb_item (
+	id_item integer,
+	ds_item	varchar(64) constraint nn_item_ds_item not null,
+	preco_custo	numeric(7,2),
+	preco_venda	numeric(7,2),
+	fg_ativo	integer,
+	CONSTRAINT pk_item_id_item PRIMARY KEY(id_item)
 );
 
-insert into tb_valor_nulo(ds_a,ds_b)
-values
-(null, 'Testando...');
-
-
-insert into tb_valor_nulo(ds_b)
-values
-('Testando..');
-
-copy tb_cliente
-from 'C:\Temp\cliente.txt'
-using delimiters';';
-
-create table tb_backup_cliente(
-id_cliente integer,
-titulo char(4),
-nome varchar(32) not null,
-sobrenome varchar(32) not null,
-endereco varchar(62) not null,
-numero varchar(5) not null,
-complemento varchar(62),
-cep varchar(10),
-cidade varchar(62),
-estado char(2) not null,
-fone_fixo varchar(15) not null,
-fone_movel varchar(15) not null,
-fg_ativo integer,
-primary key(id_cliente)
+create table tb_pedido(
+id_pedido  integer,
+id_cliente  integer constraint nn_pedido_id_cliente not null,
+dt_compra  timestamp,
+dt_entrega  timestamp,
+valor  numeric(7,2),
+fg_ativo  integer,
+constraint pk_pedido_id_pedido primary key(id_pedido),
+constraint fk_pedido_id_cliente foreign key(id_cliente)
+  references tb_cliente(id_cliente)
 );
 
-insert into tb_backup_cliente
-select * 
-from tb_cliente 
-where nome is not null;
+create table tb_item_pedido(
+	id_item	integer,
+	id_pedido	integer
+		constraint nn_item_pedido_id_pedido not null,
+	quantidade	integer,
+	constraint pk_item_pedido primary key(id_item,id_pedido),
+	constraint fk_item_pedido_id_item foreign key(id_item)
+	references tb_item(id_item),
+	constraint fk_item_pedido_id_pedido foreign key(id_pedido)
+	REFERENCES tb_pedido(id_pedido)
+);
 
-select * from tb_backup_cliente;
+create table tb_codigo_barras(
+	codigo_barras integer
+		constraint nn_cod_barras_codigo_barras not null,
+	id_item	integer constraint nn_cod_barras_id_item not null,
+		constraint fk_cod_barras_id_item foreign key(id_item)
+			references tb_item(id_item)
+);
 
-create table tb_backup_pedido as
-select *
-from tb_pedido;
+create table tb_estoque(
+	id_item	integer,
+	quantidade	integer,
+	constraint pk_estoque_id_item primary key(id_item),
+	constraint fk_estoque_id_item foreign key(id_item)
+		references tb_item(id_item)
+);
 
-select * from tb_backup_pedido;
+insert into tb_cliente(id_cliente, titulo, nome, sobrenome, endereco, numero, complemento, cep, cidade, estado, fone_fixo, fone_movel, fg_ativo)
+VALUES
+(1,'Sra','Jessica','Mendes','Avenida Acelino de Leao','89',NULL,
+'68900 300','Macapá','AP','3565 1243', '8765 8999',1),
+(2,'Sr','Andrei','Junqueira','Rua Tabaiares','1024',null,
+'30150 040','Belo Horizonte','MG','3676 1209','8876 4543',1),
+(3,'Sr','Alex','Matheus','Rua Eva Terpins','s/n', null,
+'05327 030', 'São Paulo','SP','6576 0099','9358 7676',1);
 
-update tb_cliente 
-set titulo = 'Sra',
-nome = 'Marta'
-where id_cliente = 21;
+insert into tb_cliente VALUES
+(4,'Sr','Andre','Lopes','Rua Fortaleza','552', null,'11436 360','Guarujá','SP','5654 4343', '9821 4321', 1),
+(5,'Sr','Vitor','Silva','Estrada Aguá Chata', 's/n','Rodovia 356','07251 000','Guarulhos','SP','4343 6712','831 3411',1),
+(6,'Sr','Claudinei','Safra','Avenida José Osvaldo Marques','1562',null,'14173 010','Sertãozinho','SP','3698 8100','8131 6409',1),
+(7,'Sr','Ricardo','Ferreira','Alameda Assunta Barizani Tienghi','88',null,'18046 705', 'Sorocaba','SP','6534 7099','9988 1251',1);
 
+insert into tb_cliente
+values
+(8,'Sra','Anna','Kelly','Rua das Acacias','1089',null,'13187 042','Hortolândia','SP','6432 440043','9465 0023',1),
+(9,'Sra','Cristiane','Hickman','Rua Agenir Martinhon Scachetti','300',null,'13341 633','Indaiatuba','SP','3512 1243','9987 0001',1),
+(10,'Sr','Marcos','Augusto','Avenida Australia','s/n',null,'06852 100','Itapecerica da Serra','SP','3623 8821','8891 2333',1),
+(11, 'Sr','David','Silva','Rua Arcy Prestes Ruggeri','24','Esquina do Mercado','18201 720','Itapetininga','SP','4565 9240','7765 4029',1);
 
-update tb_backup_cliente 
-set fg_ativo = 99;
+insert into tb_cliente values
+(12,'Sr','Ricardo','Cunha','Rua Jose Fortunato de Godoy','889', null,'13976 121','Itapira','SP','5467 1959','9244 9584',1),
+(13,'Sra','Laura','Batista','Rua Villa Lobos','76',null,'13976 018','Ribeirão Preto','SP','2111 8710','9991 2324',1),
+(14,'Sr','Valmil','Feliciano','Rua Professor Emilton Amaral','961','Loteamento Novo Horizonte','58053 223','João Pessoa','PB','4431 8740','9766 0033',1),
+(15,'Sr','Agnaldo','Aparecido','Rua Soldado Celio Tonelli','778',null,'09240 320','Santo André','SP','2386 8092','99625 3683',1);
 
-select * from tb_backup_cliente ;
+insert into tb_item(id_item,ds_item,preco_custo,preco_venda,fg_ativo) VALUES
+(1,'Quebra-cabeça de Madeira',15.23,21.95,1),
+(2,'Cubo X', 7.45,11.49,1),
+(3,'CD Linux',1.99,2.49,1),
+(4,'Tecidos',2.11,3.99,1),
+(5,'Moldura',7.54,9.95,1),
+(6,'Ventilador Pequeno',9.23,15.75,1);
 
-update tb_backup_cliente 
-set nome = tb_cliente.nome 
-from tb_cliente 
-where tb_cliente.id_cliente = 9
-and tb_backup_cliente.id_cliente = 10;
+insert into tb_item(id_item, ds_item, preco_custo, preco_venda, fg_ativo)
+values
+(7, 'Ventilador Grande', 13.36, 19.95, 1),
+(8, 'Escova de Dentes', 0.75, 1.45, 1),
+(9, 'Papel A4', 2.34, 2.45, 1),
+(10, 'Saco de Transporte', 0.01, 0.0, 1),
+(11, 'Alto-Falantes', 19.73, 25.32, 1)
 
-delete 
-from tb_backup_cliente;
+insert into tb_pedido(id_pedido,id_cliente,dt_compra,dt_entrega,valor,fg_ativo)
+values
+(1,3,'13-03-2013','17-03-2013',2.99,1),
+(2,8,'23-06-2013','12-09-2013',0.00,1),
+(3,15,'02-09-2013','12-09-2013',3.99,1),
+(4,13,'03-09-2013','10-09-2013',2.99,1),
+(5,8,'21-07-2013','24-07-2013',0.00,1);
 
+insert into tb_item_pedido (id_pedido,id_item,quantidade)
+VALUES 
+(1,4,1),
+(1,7,1),
+(1,9,1),
+(2,1,1),
+(2,10,1),
+(2,7,2);
+
+insert into tb_item_pedido (id_pedido,id_item,quantidade)
+VALUES 
+(2,4,2),
+(3,2,1),
+(3,1,1),
+(4,5,2),
+(5,1,1),
+(5,3,1);
+
+insert into tb_codigo_barras(codigo_barras,id_item)
+values
+(624152783,1),
+(624157463,2),
+(626453783,3),
+(624152774,3),
+(746574384,4),
+(345345867,5),
+(643456456,6);
+
+insert into tb_codigo_barras(codigo_barras,id_item)
+values
+(847673683,7),
+(624123458,8),
+(947362553,8),
+(947362746,8),
+(458726364,9),
+(987987983,11),
+(223987237,11);
+
+insert into tb_estoque(id_item,quantidade)
+values
+(1,12),
+(2,2),
+(4,8),
+(5,3),
+(7,8),
+(8,18),
+(10,1);
