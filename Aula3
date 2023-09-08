@@ -74,3 +74,51 @@ values
 insert into tb_cliente (id_cliente, titulo, nome, sobrenome, endereco, numero, cep, cidade, estado, fone_fixo, fone_movel, fg_ativo)
 values
 (22, 'Sr', 'Teste NULL', 'Silva', 'Rua Teste NULL', 's/n', '40013 890', 'Lins', 'SP', '3344 8899', '99163 3221', 1);
+
+--11
+select l.isbn, l.titulo, ed.razao_social, c.ds_categoria, a.nm_autor, l.preco from tb_livros as l
+inner join tb_categorias c on c.id_categoria = l.id_categoria and c.fg_ativo = 1
+inner join tb_editoras ed on ed.id_editora = l.id_editora and ed.fg_ativo = 1
+inner join tb_autores a on a.id_autor = l.id_autor and a.fg_ativo = 1
+where l.fg_ativo = 1 order by l.titulo;
+--12
+select c.ds_categoria, count(*) as total from tb_livros as l
+inner join tb_categorias c on c.id_categoria = l.id_categoria and c.fg_ativo = 1
+where c.ds_categoria = 'INFORMATICA' or c.ds_categoria = 'DIREITO' or c.ds_categoria = 'AUTO AJUDA' group by c.ds_categoria;
+
+--13
+select c.ds_categoria, sum(l.preco) from tb_livros l
+inner join tb_categorias c on c.id_categoria = l.id_categoria and c.fg_ativo = 1
+where c.ds_categoria in('INFORMATICA','DIREITO') group by c.ds_categoria;
+
+--14
+select l.isbn, l.titulo, c.ds_categoria, l.preco from tb_livros as l
+inner join tb_categorias c on c.id_categoria = l.id_categoria and c.fg_ativo = 1
+where l.preco not between 35 and 80 order by l.preco;
+
+--15
+select l.isbn, l.titulo, ed.razao_social, c.ds_categoria, a.nm_autor, l.preco from tb_livros as l
+inner join tb_categorias c on c.id_categoria = l.id_categoria and c.fg_ativo = 1
+inner join tb_editoras ed on ed.id_editora = l.id_editora and ed.fg_ativo = 1
+inner join tb_autores a on a.id_autor = l.id_autor and a.fg_ativo = 1 
+where c.ds_categoria not in('DIREITO','INFORMATICA');
+
+--16
+create table tb_usuarios(
+user_name varchar(25),
+nm_usuario varchar(60),
+password varchar(30),
+fg_ativo int,
+constraint pk_tb_usuarios_user_name primary key(user_name)
+);
+
+alter table tb_usuarios
+alter column password type varchar(32);
+
+insert into tb_usuarios
+values
+('ithalops','ithalo',MD5('senhatestenha12345')),
+('usuarioteste','teste',MD5('outrasenha1234'));
+
+select user_name, nm_usuario, password from tb_usuarios
+where password = (select md5('outrasenha1234'));
