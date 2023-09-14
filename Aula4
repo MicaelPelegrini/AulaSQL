@@ -1,0 +1,123 @@
+select version ();
+
+select date_trunc('second', current_timestamp - pg_postmaster_start_time()) as iniciou;
+
+select pg_postmaster_start_time();
+
+psql -h localhost -p 5432 -d LBD -U postgres -W 
+
+select current_timestamp - pg_postmaster_start_time();
+
+select datname from pg_database;
+
+select * from pg_database;
+
+create database new_database;
+
+psql -U postgres
+
+select pg_database_size(current_database());
+
+select sum(pg_database_())
+
+select pg_relation_size('tb_cliente');
+
+pg_restore.exe --host localhost --port 5432 --username postgres --dbname "correios" --verbose "C:\temp\CORREIOS.backup"
+
+
+select * from logradouros where cep = '14055610';
+
+create table tb_pedido(
+id_pedido integer,
+primary key (id_pedido)
+);
+
+create table tb_item_pedido(
+id_item smallint,
+id_pedido int,
+quantidade int,
+primary key(id_item, id_pedido)
+);
+
+alter table tb_item_pedido
+add foreign key(id_pedido)
+	references tb_pedido(id_pedido);
+	
+select * from pg_constraint where confrelid 
+
+create table tb_empregado(
+id_empregado int,
+nm_empregado varchar(40),
+salario	numeric(7,2),
+id_gerente int,
+constraint pk_tb_empregado_id_empregado primary key(id_empregado),
+constraint fk_tb_empregado_id_gerente foreign key(id_gerente)
+	references tb_empregado(id_empregado)
+);
+
+insert into tb_empregado(id_empregado, id_gerente, nm_empregado, salario) 
+values
+(100, null, 'KAUA HENRIQUE', 24000.0),
+(110, 100, 'GERALDO HENRIQUE NETO', 7500.0),
+(120, 100, 'ANDRE LEONARDO', 8200.00),
+(130, 120, 'IGOR DAVI', 5100.00),
+(140, 110, 'JULIA PRADO', 3200.0);
+
+select * from tb_empregado;
+
+select e.nm_empregado || ' trabalha para ' || g.nm_empregado "Quem é gerente de quem?"select * from logradouros where cep = '14055610';
+
+create table tb_pedido(
+id_pedido integer,
+primary key (id_pedido)
+);
+
+create table tb_item_pedido(
+id_item smallint,
+id_pedido int,
+quantidade int,
+primary key(id_item, id_pedido)
+);
+
+alter table tb_item_pedido
+add foreign key(id_pedido)
+	references tb_pedido(id_pedido);
+	
+select * from pg_constraint where confrelid 
+
+create table tb_empregado(
+id_empregado int,
+nm_empregado varchar(40),
+salario	numeric(7,2),
+id_gerente int,
+constraint pk_tb_empregado_id_empregado primary key(id_empregado),
+constraint fk_tb_empregado_id_gerente foreign key(id_gerente)
+	references tb_empregado(id_empregado)
+);
+
+insert into tb_empregado(id_empregado, id_gerente, nm_empregado, salario) 
+values
+(100, null, 'KAUA HENRIQUE', 24000.0),
+(110, 100, 'GERALDO HENRIQUE NETO', 7500.0),
+(120, 100, 'ANDRE LEONARDO', 8200.00),
+(130, 120, 'IGOR DAVI', 5100.00),
+(140, 110, 'JULIA PRADO', 3200.0);
+
+select * from tb_empregado;
+
+---------------------------------------------------------------------PROVA---------------------------------------------------------------------------
+select e.nm_empregado || ' trabalha para ' || g.nm_empregado "Quem é gerente de quem?"
+from tb_empregado e
+inner join tb_empregado g on (e.id_gerente = g.id_empregado);
+
+
+select e.nm_empregado || ' trabalha para ' || coalesce (g.nm_empregado, ' os acionistas') "Quem tranbalha para quem"
+from tb_empregado e 
+left outer join tb_empregado g on (e.id_gerente = g.id_empregado);
+from tb_empregado e
+inner join tb_empregado g on (e.id_gerente = g.id_empregado);
+
+
+select e.nm_empregado || ' trabalha para ' || coalesce (g.nm_empregado, ' os acionistas') "Quem tranbalha para quem"
+from tb_empregado e 
+left outer join tb_empregado g on (e.id_gerente = g.id_empregado);
