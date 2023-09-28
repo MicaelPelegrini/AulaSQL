@@ -83,3 +83,32 @@ select p1.descricao as "Combinação",
 	   p2.descricao as "Partes"
 from tb_parte p1, tb_parte p2
 where p1.id_parte = p2.id_parte_principal;
+
+select nome, sobrenome
+from tb_cliente 
+where sobrenome similar to '%(Matheus|Mendes)%';
+
+select nome, sobrenome
+from tb_cliente tc 
+where nome similar to '(A|S)%';
+
+select 
+count(case when preco_venda between 1.01 and 5.0
+	then 1 else null end) as "Muito baixo",
+count(case when preco_venda between 5.01 and 10.0
+	then 1 else null end) as "Baixo",
+count(case when preco_venda between 10.01 and 20.0
+	then 1 else null end) as "Medio",
+count(case when preco_venda between 20.01 and 30.0
+	then 1 else null end) as "Alto"
+from tb_item;
+
+select 
+(select min(preco_venda) from tb_item)as Menor,
+(select max(preco_venda) from tb_item)as Maior,
+(select avg(preco_venda) from tb_item)as Media;
+
+select min(preco_venda)as minimo, 
+max(preco_venda)as maximo, 
+cast(avg(preco_venda)as numeric(7,2))
+from tb_item;
