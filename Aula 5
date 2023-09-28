@@ -1,0 +1,85 @@
+select count(*) from tb_cliente tc where cidade = 'Sertãozinho';
+
+select count(*), cidade from tb_cliente tc group by(cidade); -- obrigado a usar o group by
+
+select sobrenome ,count(*) from tb_cliente tc group by sobrenome ;
+
+select cidade, count(*) from tb_cliente tc group by cidade having count(*)>1; 
+
+create table tb_pessoas (
+id_pessoa	integer,
+nm_pessoa	varchar(60),
+constraint pk_tb_pessoas_id_pessoa
+	primary key(id_pessoa)
+);
+
+insert into tb_pessoas values
+(1,'João'),
+(2,'João'),
+(3,'Maria'),
+(4,'Maria'),
+(5, 'Pedro'),
+(6,'Rafael'),
+(7,'Marina'),
+(8, 'Pedro');
+
+select nm_pessoa, count(*) from tb_pessoas
+group by nm_pessoa having count(1) > 1;
+
+select count(distinct sobrenome) as sobrenomes_unicos, count (sobrenome) as sobrenomes_com_duplicidade 
+from tb_cliente;
+
+select min(preco_venda) as menor_preco from tb_item;
+
+select ds_item from tb_item where preco_custo = (select min(preco_custo) from tb_item);
+
+select max(preco_venda) as "Maior valor" from tb_item;
+
+select ds_item, preco_custo from tb_item where preco_custo = (select max(preco_custo) from tb_item);
+
+select sum(preco_venda) from tb_item;
+
+select cast(avg(preco_venda) as numeric(7,2)) as Media from tb_item;
+
+select avg(preco_venda)::numeric(7,2) from tb_item;
+
+select p.dt_compra 
+from tb_pedido p 
+where p.id_cliente = (select c.id_cliente
+					  from tb_cliente c
+					  where c.id_cliente = p.id_cliente 
+					  and nome ='Alex'
+);
+
+select *
+from tb_pedido p,(select *
+				  from tb_cliente c
+				  where nome = 'Anna')c
+where c.id_cliente = p.id_cliente;
+
+select nome, sobrenome
+from tb_cliente c 
+where exists (select 1 
+			  from tb_pedido p
+			  where p.id_cliente = c.id_cliente 
+);
+
+create table tb_parte(
+	id_parte	integer,
+	descricao	varchar(60),
+	id_parte_principal	integer,
+	primary key(id_parte),
+	foreign key(id_parte_principal)
+	references tb_parte(id_parte)
+);
+
+insert into tb_parte 
+values
+(1,'Mesa e cadeiras', null),
+(2,'Cadeira', 1),
+(3, 'Mesa', 1);
+
+select p1.descricao as "Combinação",
+	   p2.descricao as "Partes"
+from tb_parte p1, tb_parte p2
+where p1.id_parte = p2.id_parte_principal;
