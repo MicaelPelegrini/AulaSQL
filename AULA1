@@ -3,35 +3,37 @@ TEMPLATE = TEMPLATE0
 ENCODING "WIN1252"
 CONNECTION LIMIT -1;
 
+/*Apos criar o lbd, iremos criar uma tabela para os clientes de uma empresa*/
+
 CREATE TABLE tb_cliente(
 id_cliente INTEGER,
 titulo CHAR(4),
-NOME VARCHAR(32) CONSTRAINT nn_cliente_nome NOT NULL,
-sobrenome VARCHAR(32) CONSTRAINT nn_cliente_sobrenome NOT NULL,
-endereco VARCHAR(52) CONSTRAINT nn_cliente_endereco NOT NULL,
-numero VARCHAR(5) CONSTRAINT nn_cliente_numero NOT NULL,
+NOME VARCHAR(32) CONSTRAINT nm_cliente_nome NOT NULL, 
+sobrenome VARCHAR(32) CONSTRAINT nm_cliente_sobrenome NOT NULL,
+endereco VARCHAR(52) CONSTRAINT nm_cliente_endereco NOT NULL,
+numero VARCHAR(5) CONSTRAINT nm_cliente_numero NOT NULL,
 complemento VARCHAR(52),
 cep VARCHAR(10),
-cidade VARCHAR(52) CONSTRAINT nn_cliente_cidade NOT NULL,
-estado CHAR(2) CONSTRAINT nn_cliente_estado NOT NULL,
-fone_fixo VARCHAR(15) CONSTRAINT nn_cliente_fone_fixo NOT NULL,
-fone_movel VARCHAR(15) CONSTRAINT nn_cliente_fone_movel NOT NULL,
+cidade VARCHAR(52) CONSTRAINT nm_cliente_cidade NOT NULL,
+estado CHAR(2) CONSTRAINT nm_cliente_estado NOT NULL,
+fone_fixo VARCHAR(15) CONSTRAINT nm_cliente_fone_fixo NOT NULL,
+fone_movel VARCHAR(15) CONSTRAINT nm_cliente_fone_movel NOT NULL,
 fg_ativo INTEGER,
 CONSTRAINT pk_cliente_id_cliente PRIMARY KEY(id_cliente)
 );
-
+/*Acima criamos uma table, denominamos a chave primaria e algumas colunas, identificando que nao podem receber valores nulos*/
 CREATE TABLE tb_item (
 	id_item integer,
-	ds_item	varchar(64) constraint nn_item_ds_item not null,
+	ds_item	varchar(64) constraint nm_item_ds_item not null,
 	preco_custo	numeric(7,2),
 	preco_venda	numeric(7,2),
 	fg_ativo	integer,
 	CONSTRAINT pk_item_id_item PRIMARY KEY(id_item)
 );
-
+/*Estabeleca um padrao para colunas com precos de 7,2*/
 create table tb_pedido(
 id_pedido  integer,
-id_cliente  integer constraint nn_pedido_id_cliente not null,
+id_cliente  integer constraint nm_pedido_id_cliente not null,
 dt_compra  timestamp,
 dt_entrega  timestamp,
 valor  numeric(7,2),
@@ -40,35 +42,35 @@ constraint pk_pedido_id_pedido primary key(id_pedido),
 constraint fk_pedido_id_cliente foreign key(id_cliente)
   references tb_cliente(id_cliente)
 );
-
+/*Nessa tb já utilizamos referencias da primeira para receber alguns dados importantes*/
 create table tb_item_pedido(
 	id_item	integer,
-	id_pedido	integer
-		constraint nn_item_pedido_id_pedido not null,
+	id_pedido integer
+	        constraint nm_item_pedido_id_pedido not null,
 	quantidade	integer,
-	constraint pk_item_pedido primary key(id_item,id_pedido),
-	constraint fk_item_pedido_id_item foreign key(id_item)
-	references tb_item(id_item),
-	constraint fk_item_pedido_id_pedido foreign key(id_pedido)
-	REFERENCES tb_pedido(id_pedido)
+	        constraint pk_item_pedido primary key(id_item,id_pedido),
+	             constraint fk_item_pedido_id_item foreign key(id_item)
+	                 references tb_item(id_item),
+	                   constraint fk_item_pedido_id_pedido foreign key(id_pedido)
+	                     REFERENCES tb_pedido(id_pedido)
 );
-
+/*Cria a tb_item_pedido para receber os valores dos id's da tb item e tb pedido*/
 create table tb_codigo_barras(
 	codigo_barras integer
-		constraint nn_cod_barras_codigo_barras not null,
-	id_item	integer constraint nn_cod_barras_id_item not null,
+		constraint nm_cod_barras_codigo_barras not null,
+	id_item	integer constraint nm_cod_barras_id_item not null,
 		constraint fk_cod_barras_id_item foreign key(id_item)
 			references tb_item(id_item)
 );
-
+/*Cria a tb cod barras para receber os valores da tb item */
 create table tb_estoque(
 	id_item	integer,
 	quantidade	integer,
 	constraint pk_estoque_id_item primary key(id_item),
 	constraint fk_estoque_id_item foreign key(id_item)
 		references tb_item(id_item)
-);
-
+)
+/* Cria a tb estoque com referencias da tb_item */
 insert into tb_cliente(id_cliente, titulo, nome, sobrenome, endereco, numero, complemento, cep, cidade, estado, fone_fixo, fone_movel, fg_ativo)
 VALUES
 (1,'Sra','Jessica','Mendes','Avenida Acelino de Leao','89',NULL,
@@ -168,3 +170,4 @@ values
 (7,8),
 (8,18),
 (10,1);
+/*Demonstra como adicionar valores em cada tabela e suas devidas colunas */
